@@ -1,7 +1,7 @@
-import { BaseRecord, UploadedFile } from 'adminjs'
-import path from 'path'
-import { ERROR_MESSAGES } from '../constants.js'
-import { UploadPathFunction } from '../types/upload-options.type.js'
+import { BaseRecord, UploadedFile } from "adminjs";
+import path from "path";
+import { ERROR_MESSAGES } from "../constants.js";
+import { UploadPathFunction } from "../types/upload-options.type.js";
 
 /**
  * Creates a path to the file. Related to the given provider. If it is an AWS
@@ -17,19 +17,20 @@ import { UploadPathFunction } from '../types/upload-options.type.js'
 export const buildRemotePath = (
   record: BaseRecord,
   file: UploadedFile,
-  uploadPathFunction?: UploadPathFunction,
+  uploadPathFunction?: UploadPathFunction
 ): string => {
+  console.log(record.id());
   if (!record.id()) {
-    throw new Error(ERROR_MESSAGES.NO_PERSISTENT_RECORD_UPLOAD)
+    throw new Error(ERROR_MESSAGES.NO_PERSISTENT_RECORD_UPLOAD);
   }
   if (!file.name) {
-    throw new Error(ERROR_MESSAGES.NO_FILENAME)
+    throw new Error(ERROR_MESSAGES.NO_FILENAME);
   }
-  const { ext, name } = path.parse(file.name)
+  const { ext, name } = path.parse(file.name);
 
   if (uploadPathFunction) {
-    return uploadPathFunction(record, `${name}${ext}`)
+    return uploadPathFunction(record, `${name}${ext}`);
   }
 
-  return `${record.id()}/${name}${ext}`
-}
+  return `${record.id()}/${name}${ext}`;
+};
